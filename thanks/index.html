@@ -79,7 +79,7 @@ h1{margin:0;font-weight:900;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.1;t
 .n{font-weight:200;font-size:3rem;line-height:1;direction:ltr;text-align:right}
 .step h2{margin:0;font-size:1.3rem;font-weight:900;line-height:1.2}
 .step p{margin:0;color:var(--muted);font-size:1.02rem}
-.go{margin-top:8px;display:inline-flex;align-items:center;justify-content:center;gap:.55em;padding:.95em 1.5em;border-radius:999px;background:var(--grad);color:#fff;font-weight:700;text-decoration:none;position:relative;overflow:hidden;box-shadow:0 14px 34px -14px rgba(242,64,155,.7)}
+.go{margin-top:8px;display:inline-flex;align-items:center;justify-content:center;gap:.55em;padding:.95em 1.5em;border-radius:999px;background:var(--grad);color:#121011;font-weight:700;text-decoration:none;position:relative;overflow:hidden;box-shadow:0 14px 34px -14px rgba(242,64,155,.7)}
 .go::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(120%);animation:sheen 3.6s 3.2s ease-in-out infinite}
 @keyframes sheen{0%{transform:translateX(120%)}35%,100%{transform:translateX(-120%)}}
 .go svg{transform:scaleX(-1)}
@@ -89,6 +89,9 @@ h1{margin:0;font-weight:900;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.1;t
 .help b{color:var(--on-dark);user-select:all}
 .love{margin-top:46px;display:grid;justify-items:center;gap:4px;color:var(--muted);opacity:0;animation:fade .8s 3s forwards}
 .love strong{color:var(--on-dark);font-size:1.2rem}
+.legal{margin-top:40px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;font-size:.9rem;color:#8F8885}
+.legal a{color:#C9C2BF}
+.legal a:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
 
 @media (max-width:820px){
   .steps{grid-template-columns:minmax(0,1fr)}
@@ -147,6 +150,7 @@ h1{margin:0;font-weight:900;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.1;t
 
   <p class="help">לא הגיע מייל תוך כמה דקות? כדאי לבדוק בתיקיית הקידומי מכירות או הספאם. ואם עדיין אין, כתבי לנו: <b>teza.zilum@gmail.com</b></p>
   <div class="love"><span>באהבה,</span><strong>שירה צפדיה</strong><span>TEZA Academy</span></div>
+  <nav class="legal" aria-label="מסמכים"><a href="../terms/">תנאי רכישה ושימוש</a><a href="../privacy/">מדיניות פרטיות</a><a href="../accessibility/">הצהרת נגישות</a></nav>
 </div>
 
 <script>
