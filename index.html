@@ -1,0 +1,1082 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TEZA ALBUM</title>
+<meta name="description" content="TEZA ALBUM: תוכנה שמעצבת אלבומים בעצמה. מכניסים את התמונות ומקבלים אלבום שלם עם פריסות, כיתובים ואלמנטים. רכישה חד־פעמית, בלי מנוי.">
+<meta property="og:title" content="TEZA ALBUM">
+<meta property="og:description" content="TEZA ALBUM: תוכנה שמעצבת אלבומים בעצמה. מכניסים את התמונות ומקבלים אלבום שלם עם פריסות, כיתובים ואלמנטים. רכישה חד־פעמית, בלי מנוי.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shiru178.github.io/album/">
+<meta property="og:image" content="https://shiru178.github.io/album/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="canonical" href="https://shiru178.github.io/album/">
+<meta name="theme-color" content="#121011">
+<link rel="icon" href="assets/icon-64.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="preload" href="assets/fonts/ploni-black.woff2" as="font" type="font/woff2" crossorigin>
+<style>html,body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+@font-face{font-family:"ploni";font-style:normal;font-weight:200;font-display:swap;src:url(assets/fonts/ploni-ultralight.woff2) format("woff2")}
+@font-face{font-family:"ploni";font-style:normal;font-weight:300;font-display:swap;src:url(assets/fonts/ploni-light.woff2) format("woff2")}
+@font-face{font-family:"ploni";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/ploni-regular.woff2) format("woff2")}
+@font-face{font-family:"ploni";font-style:normal;font-weight:700;font-display:swap;src:url(assets/fonts/ploni-bold.woff2) format("woff2")}
+@font-face{font-family:"ploni";font-style:normal;font-weight:900;font-display:swap;src:url(assets/fonts/ploni-black.woff2) format("woff2")}
+/* Layout: TEZA black with paper interludes. One loud moment (giant thin ALBUM + the real screen recording),
+   the story told against a filling clock, everything else quiet and set in Ploni. */
+:root{
+  --black:#121011; --ink:#1A1819; --ink-2:#242023; --line:rgba(250,248,246,.12); --line-2:rgba(250,248,246,.2);
+  --paper:#FAF8F6; --paper-2:#F1ECE7; --on-dark:#FAF8F6; --muted:#A8A09D; --dim:#8F8885;
+  --text:#1B1819; --text-2:#5E5755; --rule:rgba(27,24,25,.14);
+  --pink:#F2409B; --coral:#FF6B78; --orange:#FFA63D;
+  --grad:linear-gradient(100deg,#F2409B 0%,#FF6B78 52%,#FFA63D 100%);
+  --f:'ploni','Arial Hebrew','Segoe UI',Arial,sans-serif;
+  --wrap:1180px; --gut:clamp(16px,4vw,40px);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--black);color:var(--on-dark);font:400 1.125rem/1.6 var(--f);-webkit-font-smoothing:antialiased}
+.page{overflow-x:clip}
+.page img,.page video{display:block;max-width:100%;height:auto}
+.page a{color:inherit}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gut)}
+.narrow{max-width:760px;margin-inline:auto;padding-inline:var(--gut)}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{text-wrap:balance;font-weight:900;line-height:1.08;letter-spacing:-.01em}
+.gtext{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gbar{width:64px;height:4px;background:var(--grad);border-radius:2px}
+.eyebrow{font-size:.82rem;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+.giant{font-weight:200;direction:ltr;line-height:.8;letter-spacing:.02em;font-size:clamp(96px,17vw,250px)}
+.num{font-variant-numeric:tabular-nums}
+section{position:relative}
+.sec{padding-block:clamp(72px,10vw,128px)}
+.paper{background:var(--paper);color:var(--text)}
+.paper .eyebrow{color:var(--text-2)}
+.stack{display:grid;gap:18px}
+.lines p{font-size:clamp(1.15rem,1.9vw,1.4rem);line-height:1.5}
+.lead{font-size:clamp(1.15rem,1.8vw,1.35rem);line-height:1.55;color:var(--muted)}
+.paper .lead{color:var(--text-2)}
+.note{font-size:.9rem;color:var(--dim)}
+
+/* buttons */
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:.6em;padding:1.05em 1.8em;border-radius:999px;background:var(--grad);color:#121011;font:700 1.08rem/1.2 var(--f);text-decoration:none;text-align:center;box-shadow:0 14px 34px -12px rgba(242,64,155,.6);transition:transform .2s,box-shadow .2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 18px 40px -12px rgba(255,107,120,.75)}
+.cta:focus-visible,.page button:focus-visible,.page a:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.cta svg{flex:none;transform:scaleX(-1)}
+.cta.lg{font-size:1.18rem;padding:1.15em 2.1em}
+.cta[aria-disabled="true"]{pointer-events:none;opacity:.5}
+.trust{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.92rem;color:var(--muted)}
+.trust span{display:inline-flex;align-items:center;gap:7px}
+.trust span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--coral)}
+
+/* ---------- top bar + hero ---------- */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:22px}
+.brand{display:flex;align-items:center;gap:10px;direction:ltr;text-decoration:none}
+.brand img{height:20px;width:auto}
+.brand span{font-weight:200;font-size:24px;letter-spacing:.14em;line-height:1;color:var(--on-dark)}
+.top .mini{font-size:.95rem;font-weight:700;padding:.7em 1.2em;border-radius:999px;border:1px solid var(--line-2);text-decoration:none;white-space:nowrap}
+.top .mini b{font-weight:900}
+.hero{padding-bottom:clamp(56px,8vw,96px)}
+.hero{position:relative;overflow:hidden}
+.hero>.wrap{position:relative;z-index:1}
+.hero>.giant{position:absolute;z-index:0;left:-.03em;bottom:-.13em;color:rgba(250,248,246,.06);pointer-events:none;user-select:none;font-size:clamp(120px,24vw,360px)}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);grid-template-areas:"txt buy" "media media";column-gap:clamp(28px,5vw,80px);row-gap:clamp(32px,3.5vw,48px);align-items:end;padding-top:clamp(12px,2vw,24px)}
+.hero-txt{grid-area:txt;align-self:end}
+.hero-grid>.offer-mini{grid-area:buy;align-self:end;margin-top:0}
+.hero-media{grid-area:media}
+.hero-media video{cursor:zoom-in}
+.hero h1{font-size:clamp(2.3rem,4.3vw,3.6rem)}
+.hero h1 em{font-style:normal}
+.hero .lines{margin-top:22px;display:grid;gap:4px;color:var(--muted)}
+.hero .lines p{font-size:clamp(1.05rem,1.5vw,1.2rem)}
+.hero .lines strong{color:var(--on-dark);font-weight:700}
+.offer-mini{margin-top:28px;display:grid;gap:16px;justify-items:start}
+.price-row{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px}
+.price-row .now{font-size:clamp(2.6rem,4.4vw,3.4rem);font-weight:900;line-height:1}
+.price-row .was{font-size:1.15rem;color:var(--muted);text-decoration:line-through;text-decoration-color:var(--coral)}
+.price-row .tag{font-size:.85rem;font-weight:700;padding:.35em .8em;border-radius:999px;background:rgba(255,107,120,.14);color:#FFB1B8}
+.screen{position:relative;border-radius:14px;padding:1px;background:linear-gradient(140deg,rgba(242,64,155,.65),rgba(255,166,61,.35) 40%,rgba(250,248,246,.08) 70%);box-shadow:0 40px 90px -30px rgba(0,0,0,.9),0 0 0 1px rgba(0,0,0,.4)}
+.screen video,.screen img{border-radius:13px;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+.screen-cap{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:.92rem;color:var(--muted)}
+.rec{width:9px;height:9px;border-radius:50%;background:#FF4D5E;box-shadow:0 0 0 4px rgba(255,77,94,.2);flex:none}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;border-top:1px solid var(--line);margin-top:clamp(40px,6vw,64px);padding-top:22px;font-size:1rem;color:var(--muted)}
+.facts b{color:var(--on-dark);font-weight:700}
+
+/* ---------- moving strip of real spreads ---------- */
+.strip{overflow:hidden;padding-block:6px 0;border-block:1px solid var(--line);background:var(--ink)}
+.strip-track{display:flex;gap:10px;width:max-content;padding-block:10px;animation:roll 90s linear infinite}
+.strip img{height:clamp(96px,13vw,150px);width:auto;aspect-ratio:56/21;border-radius:3px}
+@keyframes roll{to{transform:translateX(50%)}}
+.strip-cap{font-size:.85rem;color:var(--dim);text-align:center;padding-block:8px 12px}
+
+/* ---------- story with the clock ---------- */
+.story-grid{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:clamp(32px,6vw,90px);align-items:start}
+.story h2{font-size:clamp(2rem,4vw,3.1rem);margin-bottom:40px}
+.beat{display:grid;gap:10px;margin-bottom:38px}
+.beat p{font-size:clamp(1.2rem,2vw,1.5rem);line-height:1.45;transition:color .4s}
+.beat .inner{font-weight:300;font-style:normal;color:var(--text-2);padding-inline-start:18px;border-inline-start:2px solid var(--coral)}
+.beat .quiet{color:var(--text-2)}
+.hour{font-size:clamp(4.5rem,11vw,8.5rem);font-weight:900;line-height:.9;margin-block:10px 14px}
+.clock{position:sticky;top:calc(env(safe-area-inset-top,0px) + 28px);display:grid;justify-items:center;gap:12px;padding:26px 20px;border-radius:20px;background:var(--paper-2)}
+.clock svg{width:180px;height:180px}
+.clock .ring-bg{fill:none;stroke:rgba(27,24,25,.1);stroke-width:10}
+.clock .ring{fill:none;stroke:url(#cg);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .6s cubic-bezier(.3,.7,.3,1)}
+.clock .mins{font-size:58px;font-weight:900;fill:var(--text)}
+.clock .unit{font-size:15px;fill:var(--text-2);font-weight:700}
+.clock p{font-size:.95rem;color:var(--text-2);text-align:center;line-height:1.4}
+
+/* ---------- "it's never just this album" ---------- */
+.cost h2{font-size:clamp(2rem,4vw,3.1rem)}
+.cost-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,90px);margin-top:44px}
+.qt{position:relative;padding-top:52px;font-size:clamp(1.5rem,2.6vw,2rem);font-weight:300;line-height:1.35}
+.qt::before{content:"";position:absolute;top:0;right:0;width:44px;height:34px;background:var(--grad);-webkit-mask:linear-gradient(#000 0 0) 0 0/16px 100% no-repeat,linear-gradient(#000 0 0) 26px 0/16px 100% no-repeat;mask:linear-gradient(#000 0 0) 0 0/16px 100% no-repeat,linear-gradient(#000 0 0) 26px 0/16px 100% no-repeat;transform:skewX(-18deg)}
+.knows{display:grid;gap:12px;margin-top:20px}
+.knows p{font-size:1.25rem;padding-block:12px;border-bottom:1px solid var(--line)}
+.why{font-size:clamp(1.8rem,3.6vw,2.8rem);font-weight:900;line-height:1.15;margin-top:clamp(48px,7vw,80px);max-width:22ch}
+.time-uses{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.time-uses span{padding:.55em 1.1em;border-radius:999px;border:1px solid var(--line-2);font-size:1.05rem}
+.closer{margin-top:clamp(48px,7vw,72px);font-size:clamp(1.4rem,2.4vw,1.85rem);line-height:1.4;max-width:30ch}
+.closer b{font-weight:900}
+
+/* ---------- the belief ---------- */
+.belief{background:var(--ink)}
+.belief h2{font-size:clamp(2rem,4vw,3.1rem);max-width:20ch}
+.compare{margin-top:44px;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.crow{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr)}
+.crow>div{padding:18px 20px;border-top:1px solid var(--line);font-size:1.02rem;min-width:0}
+.crow:first-child>div{border-top:0;font-weight:700;font-size:.9rem;letter-spacing:.03em;color:var(--muted);padding-block:16px}
+.crow>div:nth-child(3){background:rgba(255,107,120,.07)}
+.crow:first-child>div:nth-child(3){color:var(--on-dark)}
+.crow .you{color:var(--muted)}
+.crow .it{font-weight:700}
+.crow .it::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--grad);margin-inline-end:10px;vertical-align:middle}
+.belief .turn{margin-top:clamp(44px,6vw,64px);display:grid;gap:10px}
+.belief .turn p{font-size:clamp(1.3rem,2.2vw,1.7rem);line-height:1.4}
+.belief .turn .born{font-weight:900}
+
+/* ---------- meet ---------- */
+.meet{background:var(--black)}
+.meet-head{display:grid;gap:18px;max-width:780px}
+.meet h2{font-size:clamp(2.4rem,5vw,4rem)}
+.steps{display:grid;gap:clamp(56px,8vw,96px);margin-top:clamp(56px,8vw,88px)}
+.step{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:clamp(28px,5vw,64px);align-items:center}
+.step:nth-child(even){grid-template-columns:minmax(0,1.4fr) minmax(0,.8fr)}
+.step:nth-child(even) .step-txt{order:2}
+.step-n{font-weight:200;font-size:4rem;line-height:1;direction:ltr;text-align:right}
+.step h3{font-size:clamp(1.6rem,2.8vw,2.2rem);margin-block:10px 14px}
+.step p{color:var(--muted);font-size:1.1rem}
+.step .can{display:grid;gap:6px;margin-top:14px}
+.step .can p{color:var(--on-dark)}
+.step .can b{font-weight:700}
+.motto{margin-top:clamp(64px,9vw,104px);text-align:center;font-size:clamp(1.9rem,4vw,3.2rem);font-weight:900;line-height:1.15}
+
+/* ---------- what you get ---------- */
+.get h2{font-size:clamp(2rem,4vw,3.1rem)}
+.bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;margin-top:44px}
+.card{background:#fff;border-radius:20px;padding:clamp(22px,3vw,32px);display:grid;gap:12px;align-content:start;min-width:0;border:1px solid var(--rule)}
+.card h3{font-size:1.45rem;line-height:1.2}
+.card p{color:var(--text-2);font-size:1.02rem}
+.card .k{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:#BE1E68}
+.c-caps .k{color:var(--pink)}
+.c-built{grid-column:span 4}
+.c-layouts{grid-column:span 2;grid-row:span 2}
+.c-caps{grid-column:span 6;background:var(--black);color:var(--on-dark);border:0}
+.c-caps p{color:var(--muted)}
+.c-control{grid-column:span 4}
+.c-sub,.c-off,.c-files{grid-column:span 2}
+.c-built img{border-radius:6px;margin-top:6px}
+.c-layouts .panel{border-radius:12px;overflow:hidden;background:var(--black);margin-top:6px;max-height:420px}
+.c-layouts .panel img{width:100%}
+.card .big-n{font-size:3.6rem;font-weight:900;line-height:1;color:var(--text)}
+.control-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:6px}
+.control-list div{background:var(--paper);border-radius:12px;padding:14px;font-size:.98rem;line-height:1.35}
+.control-list b{display:block;font-weight:900;font-size:1.05rem;margin-top:4px}
+.cap-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.cap-tabs button{font:700 .98rem/1 var(--f);padding:.7em 1.15em;border-radius:999px;border:1px solid var(--line-2);background:transparent;color:var(--on-dark);cursor:pointer}
+.cap-tabs button[aria-selected="true"]{background:var(--paper);color:var(--text);border-color:var(--paper)}
+.cap-desc{min-height:1.6em;color:var(--on-dark)!important;font-size:1.08rem!important}
+.cap-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-top:8px}
+.cap-grid div{aspect-ratio:1/.86;border-radius:14px;background:var(--ink-2);display:grid;place-items:center;padding:12%}
+.cap-grid img{max-height:100%;width:auto;object-fit:contain}
+.cap-stats{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:10px;font-size:.98rem;color:var(--muted)}
+.cap-stats b{color:var(--on-dark)}
+
+/* ---------- about ---------- */
+.about-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,90px);align-items:start}
+.about .giant{font-size:clamp(84px,11vw,170px);color:var(--text);margin-bottom:22px}
+.about .giant .dot{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.about .lines{display:grid;gap:14px}
+.about .lines p{font-size:1.18rem;color:var(--text-2)}
+.about .lines strong{color:var(--text);font-weight:700}
+.me{border-radius:20px;overflow:hidden;aspect-ratio:4/5;background:var(--paper-2)}
+.me img{width:100%;height:100%;object-fit:cover}
+.about .qt{color:var(--text);margin-top:40px}
+.sig{margin-top:26px;display:flex;align-items:center;gap:14px}
+.sig img{height:22px;width:auto;filter:invert(1)}
+.sig span{font-weight:700}
+
+/* ---------- proof ---------- */
+.proof h2{font-size:clamp(2.2rem,4.6vw,3.6rem)}
+.proof-head{display:grid;gap:16px;max-width:760px}
+.proof .screen{margin-top:44px}
+.measure{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:22px;background:var(--line);border-radius:16px;overflow:hidden}
+.measure div{background:var(--ink);padding:20px 18px;display:grid;gap:4px}
+.measure b{font-size:clamp(1.9rem,3.4vw,2.6rem);font-weight:900;line-height:1}
+.measure span{font-size:.92rem;color:var(--muted)}
+.albums{margin-top:clamp(64px,9vw,104px)}
+.albums h3{font-size:clamp(1.6rem,3vw,2.3rem)}
+.al-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.al-tabs button{font:700 .95rem/1.2 var(--f);padding:.75em 1.2em;border-radius:999px;border:1px solid var(--line-2);background:transparent;color:var(--on-dark);cursor:pointer;text-align:start}
+.al-tabs button small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;margin-top:2px}
+.al-tabs button[aria-selected="true"]{border-color:var(--coral);background:rgba(255,107,120,.1)}
+.viewer{margin-top:22px;position:relative}
+.viewer .spread{width:100%;aspect-ratio:56/21;object-fit:cover;border-radius:4px;box-shadow:0 30px 70px -30px rgba(0,0,0,.9);background:var(--ink-2)}
+.v-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:16px}
+.v-bar .pos{font-size:.98rem;color:var(--muted)}
+.v-nav{display:flex;gap:8px}
+.v-nav button{width:48px;height:48px;border-radius:50%;border:1px solid var(--line-2);background:transparent;color:var(--on-dark);cursor:pointer;display:grid;place-items:center}
+.v-nav button:hover{border-color:var(--coral)}
+.thumbs{display:flex;gap:8px;margin-top:14px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.thumbs button{flex:none;width:132px;padding:0;border:2px solid transparent;border-radius:4px;background:none;cursor:pointer;opacity:.55;transition:opacity .2s}
+.thumbs button[aria-current="true"]{border-color:var(--coral);opacity:1}
+.thumbs img{width:100%;aspect-ratio:56/21;object-fit:cover;border-radius:2px}
+.proof .ask{margin-top:clamp(56px,8vw,88px);font-size:clamp(1.6rem,3.2vw,2.5rem);font-weight:300;line-height:1.3;text-align:center}
+.proof .ask b{font-weight:900}
+
+/* ---------- calculator ---------- */
+.calc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);margin-top:40px;align-items:start}
+.calc h2{font-size:clamp(2rem,4vw,3.1rem)}
+.sliders{display:grid;gap:26px}
+.sl label{display:flex;justify-content:space-between;gap:12px;font-weight:700;font-size:1.05rem}
+.sl output{font-weight:900;font-size:1.3rem}
+.sl input{width:100%;margin-top:10px;accent-color:#FF6B78;height:28px}
+.sl small{display:block;color:var(--text-2);font-size:.88rem;margin-top:2px}
+.res{background:var(--black);color:var(--on-dark);border-radius:22px;padding:clamp(24px,3.5vw,36px);display:grid;gap:20px}
+.res .row{display:grid;gap:2px}
+.res .row span{color:var(--muted);font-size:.95rem}
+.res .row b{font-size:clamp(1.9rem,3.6vw,2.6rem);font-weight:900;line-height:1.1}
+.bars{display:grid;gap:10px;padding-top:6px;border-top:1px solid var(--line)}
+.bar{display:grid;grid-template-columns:110px minmax(0,1fr) auto;gap:12px;align-items:center;font-size:.92rem;color:var(--muted)}
+.bar i{display:block;height:12px;border-radius:6px;background:var(--line-2);transition:width .4s}
+.bar.v i{background:var(--grad)}
+.bar b{color:var(--on-dark);font-weight:700}
+.calc .disc{margin-top:22px;color:var(--text-2);font-size:.95rem;max-width:60ch}
+.calc .after{margin-top:28px;display:grid;gap:6px;font-size:1.2rem}
+
+/* ---------- offer ---------- */
+.offer{background:var(--black)}
+.box{position:relative;max-width:880px;margin-inline:auto;border-radius:28px;padding:2px;background:var(--grad)}
+.box-in{border-radius:26px;background:var(--ink);padding:clamp(28px,5vw,56px);display:grid;gap:26px}
+.box h2{font-size:clamp(2rem,4vw,3rem)}
+.uses{display:flex;flex-wrap:wrap;gap:8px}
+.uses span{padding:.45em 1em;border-radius:999px;background:var(--ink-2);font-size:1rem}
+.big-price{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 28px;align-items:end}
+.big-price .now{font-size:clamp(4rem,10vw,6.6rem);font-weight:900;line-height:.85}
+.big-price .now small{font-size:.45em;font-weight:700;margin-inline-start:6px}
+.big-price .meta{display:grid;gap:6px;padding-bottom:6px}
+.big-price .was{font-size:1.2rem;color:var(--muted)}
+.big-price .was s{text-decoration-color:var(--coral)}
+.big-price .save{font-weight:700;color:#FFB1B8}
+.incl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 24px;padding-block:22px;border-block:1px solid var(--line)}
+.incl p{display:flex;gap:10px;align-items:baseline;font-size:1.05rem}
+.incl p::before{content:"";flex:none;width:8px;height:8px;border-radius:2px;background:var(--grad);transform:translateY(-2px)}
+.timer{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;font-size:1rem;color:var(--muted)}
+.timer .t{display:flex;gap:6px;direction:ltr}
+.timer .t span{min-width:58px;text-align:center;padding:8px 6px;border-radius:10px;background:var(--ink-2);color:var(--on-dark);font-weight:900;font-size:1.35rem;line-height:1}
+.timer .t span small{display:block;font-size:.65rem;font-weight:400;color:var(--muted);margin-top:4px}
+.box .cta{justify-self:start}
+.ended{display:grid;gap:8px}
+
+/* ---------- FAQ as a chat ---------- */
+.faq h2{font-size:clamp(2rem,4vw,3.1rem)}
+.chat{display:grid;gap:14px;margin-top:40px}
+.q,.a{max-width:min(560px,88%);padding:16px 20px;border-radius:22px;font-size:1.06rem;line-height:1.5}
+.q{justify-self:start;background:#fff;border:1px solid var(--rule);border-start-start-radius:6px;font-weight:700}
+.a{justify-self:end;background:var(--black);color:var(--on-dark);border-start-end-radius:6px}
+.a+.q{margin-top:14px}
+
+/* ---------- decide + close ---------- */
+.decide h2{font-size:clamp(2rem,4vw,3.1rem)}
+.paths{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:40px}
+.path{border-radius:22px;padding:clamp(22px,3vw,32px);display:grid;gap:10px;align-content:start}
+.path.old{border:1px solid var(--line)}
+.path.new{background:var(--paper);color:var(--text)}
+.path h3{font-size:1.3rem;margin-bottom:6px}
+.path ol{margin:0;padding:0;list-style:none;display:grid;gap:8px;counter-reset:s}
+.path li{counter-increment:s;display:flex;gap:12px;align-items:baseline;font-size:1.08rem}
+.path li::before{content:counter(s);font-weight:200;font-size:1.3rem;min-width:1.2em;color:var(--muted)}
+.path.new li::before{color:var(--pink);font-weight:700}
+.path.old li{color:var(--muted)}
+.not{margin-top:clamp(48px,7vw,72px);display:grid;gap:8px;font-size:clamp(1.3rem,2.3vw,1.7rem);line-height:1.4}
+.not b{font-weight:900}
+.close{text-align:center}
+.triad{display:grid;gap:4px;font-size:clamp(2.6rem,7vw,5.4rem);font-weight:900;line-height:1}
+.triad span:nth-child(2){font-weight:200}
+.close .recap{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:40px}
+.close .recap span{padding:.5em 1.1em;border-radius:999px;border:1px solid var(--line-2);font-size:1rem}
+.close .price-row{justify-content:center;margin-top:36px}
+.close .cta{margin-top:24px}
+.close .worth{margin-top:36px;font-size:1.25rem;color:var(--muted)}
+.slogan{margin-top:clamp(56px,8vw,88px);font-size:clamp(1.3rem,2.6vw,2rem);font-weight:300;line-height:1.35}
+.slogan b{font-weight:900}
+.love{margin-top:36px;display:grid;justify-items:center;gap:6px;color:var(--muted)}
+.love strong{color:var(--on-dark);font-size:1.25rem}
+
+footer{border-top:1px solid var(--line);padding-block:32px calc(32px + 76px);color:var(--dim);font-size:.9rem}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center}
+.foot .brand img{height:16px}
+.foot .brand span{font-size:18px}
+.foot p{display:flex;flex-wrap:wrap;gap:6px 18px}
+
+/* sticky buy bar */
+.buybar{position:fixed;z-index:20;inset-inline:0;bottom:0;padding:12px var(--gut) calc(12px + env(safe-area-inset-bottom,0px));background:rgba(18,16,17,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px;transform:translateY(calc(100% + 40px));transition:transform .35s}
+.buybar.on{transform:none}
+.buybar .p{display:grid;line-height:1.2}
+.buybar .p b{font-size:1.35rem;font-weight:900}
+.buybar .p span{font-size:.82rem;color:var(--muted)}
+.buybar .cta{padding:.85em 1.5em;font-size:1rem}
+@media (min-width:1000px){.buybar{inset-inline:auto;left:24px;bottom:24px;border-radius:999px;border:1px solid var(--line-2);padding:10px 10px 10px 10px;padding-inline-start:24px}}
+
+/* ---------- narrow screens ---------- */
+@media (max-width:900px){
+  .hero-grid,.story-grid,.cost-grid,.about-grid,.calc-grid,.paths{grid-template-columns:minmax(0,1fr)}
+  .hero>.giant{font-size:38vw}
+  .hero-grid{grid-template-areas:"txt" "media" "buy";row-gap:28px}
+  .hero-grid>.offer-mini{align-self:start}
+  .step,.step:nth-child(even){grid-template-columns:minmax(0,1fr)}
+  .step:nth-child(even) .step-txt{order:0}
+  .story-grid .clock{order:-1}
+  .clock{grid-template-columns:auto minmax(0,1fr);justify-items:start;align-items:center;padding:14px 18px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:2;box-shadow:0 10px 30px -18px rgba(0,0,0,.5)}
+  .clock svg{width:72px;height:72px}
+  .bento{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .c-built,.c-caps,.c-control,.c-layouts{grid-column:span 2}
+  .c-layouts{grid-row:auto}
+  .c-layouts .panel{max-height:300px}
+  .c-sub,.c-off,.c-files{grid-column:span 1}
+  .cap-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .measure{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .me{aspect-ratio:16/11}
+}
+@media (max-width:560px){
+  .hero-media .screen{margin-inline:calc(-1 * var(--gut));border-radius:0;padding-block:1px;padding-inline:0}
+  .hero-media .screen video{border-radius:0}
+  .hero-media .screen-cap{font-size:.85rem}
+  body{font-size:1.0625rem}
+  .top .mini{display:none}
+  .crow{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .crow>div:first-child{grid-column:1/-1;padding-bottom:4px;font-weight:700}
+  .crow>div:first-child+div,.crow>div:first-child+div+div{border-top:0;padding-top:6px}
+  .crow:first-child>div:first-child{display:none}
+  .crow:first-child>div:nth-child(2),.crow:first-child>div:nth-child(3){border-top:0}
+  .c-sub,.c-off,.c-files{grid-column:span 2}
+  .control-list{grid-template-columns:minmax(0,1fr)}
+  .incl{grid-template-columns:minmax(0,1fr)}
+  .big-price{grid-template-columns:minmax(0,1fr)}
+  .box .cta,.offer-mini .cta,.close .cta{width:100%}
+  .offer-mini{justify-items:stretch}
+  .thumbs button{width:96px}
+  .bar{grid-template-columns:88px minmax(0,1fr) auto}
+  .q,.a{max-width:94%}
+}
+/* skip link */
+.skip{position:fixed;inset-inline-start:12px;top:-80px;z-index:60;background:var(--paper);color:var(--text);padding:12px 18px;border-radius:10px;font-weight:700;text-decoration:none}
+.skip:focus{top:calc(env(safe-area-inset-top,0px) + 12px)}
+/* pause button on the looping hero video */
+.vctl{position:absolute;inset-inline-start:12px;bottom:12px;z-index:2;display:flex;gap:8px}
+.vbtn{display:inline-flex;align-items:center;gap:8px;padding:8px 14px 8px 12px;border-radius:999px;border:1px solid var(--line-2);background:rgba(18,16,17,.78);color:var(--on-dark);font:700 .9rem/1 var(--f);cursor:pointer;backdrop-filter:blur(6px)}
+.vbtn:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+@media (max-width:560px){
+  .hero-media .screen video{aspect-ratio:1/1}
+  .vctl{inset-inline-start:10px;bottom:10px}
+  .vbtn{width:42px;height:42px;padding:0;justify-content:center}
+  .vbtn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+}
+.legal-note{font-size:.85rem;color:var(--muted)}
+.legal-note a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.close .legal-note{margin-top:12px}
+.strip:hover .strip-track,.strip:focus-within .strip-track{animation-play-state:paused}
+/* accessibility menu */
+.a11y-btn{position:fixed;z-index:30;inset-inline-start:16px;bottom:calc(88px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;border:2px solid var(--paper);background:#1E4FD6;color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 26px -10px rgba(0,0,0,.8)}
+.a11y-btn:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.a11y-panel{position:fixed;z-index:31;inset-inline-start:16px;bottom:calc(150px + env(safe-area-inset-bottom,0px));width:min(320px,calc(100vw - 32px));max-height:calc(100vh - 180px);overflow:auto;background:var(--paper);color:var(--text);border-radius:18px;padding:18px;box-shadow:0 30px 70px -20px rgba(0,0,0,.85);display:grid;gap:8px}
+.a11y-panel h2{font-size:1.15rem;margin:0 0 4px}
+.a11y-panel button.opt{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--rule);background:#fff;color:var(--text);font:700 1rem/1.2 var(--f);cursor:pointer;text-align:start}
+.a11y-panel button.opt[aria-pressed="true"]{border-color:#1E4FD6;background:#EEF2FF}
+.a11y-panel button.opt[aria-pressed="true"]::after{content:"פעיל";font-size:.8rem;color:#1E4FD6}
+.a11y-panel button:focus-visible,.a11y-panel a:focus-visible{outline:2px solid #1E4FD6;outline-offset:2px}
+.a11y-panel .row2{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:4px;font-size:.95rem}
+.a11y-panel .row2 a{color:#1E4FD6;font-weight:700}
+.a11y-panel .reset{border:0;background:none;color:var(--text-2);font:700 .95rem var(--f);text-decoration:underline;cursor:pointer}
+@media (min-width:1000px){.a11y-btn{bottom:24px}.a11y-panel{bottom:88px}}
+html.a11y-big{font-size:118%}
+html.a11y-bigger{font-size:136%}
+html.a11y-links .page a{text-decoration:underline!important;text-underline-offset:3px}
+html.a11y-font .page,html.a11y-font .page *{font-family:Arial,'Segoe UI',sans-serif!important;letter-spacing:normal!important}
+html.a11y-still .page *,html.a11y-still .page *::before,html.a11y-still .page *::after{animation:none!important;transition:none!important}
+html.a11y-contrast{--muted:#ECE8E6;--dim:#DAD5D2;--text-2:#1B1819;--line:rgba(250,248,246,.45);--line-2:rgba(250,248,246,.7);--rule:rgba(27,24,25,.55)}
+html.a11y-contrast .page .gtext{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#FFC078}
+html.a11y-contrast .page .paper .gtext,html.a11y-contrast .page .card .gtext{color:#9A0F4E}
+html.a11y-contrast .page .hero>.giant{color:transparent}
+@media (prefers-reduced-motion:reduce){
+  .strip-track{animation:none}
+  .cta,.clock .ring,.bar i,.buybar{transition:none}
+}
+</style>
+
+<div class="page" dir="rtl" lang="he">
+<a class="skip" href="#main">דילוג לתוכן הראשי</a>
+<main id="main" tabindex="-1">
+
+<!-- =============== 1. HERO =============== -->
+<section class="hero" id="top">
+  <div class="giant" aria-hidden="true">ALBUM</div>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="#top" aria-label="TEZA ALBUM"><img src="assets/teza-white.png" alt="TEZA" width="520" height="137"><span>ALBUM</span></a>
+      <a class="mini" href="https://pay.grow.link/Njc4NDc~a0f8480e5bcdb06b411c3984e11fc23f-NDI1Nzg3Ng" data-buy>מחיר השקה <b class="num">479 ₪</b></a>
+    </header>
+    <div class="hero-grid">
+      <div class="hero-txt">
+        <p class="eyebrow">תוכנה שמעצבת אלבומים בעצמה · Windows ו-Mac</p>
+        <h1 style="margin-top:14px">מה אם את האלבום הבא שלך <em class="gtext">את בכלל לא תצטרכי לעצב?</em></h1>
+        <div class="lines">
+          <p>לא לבחור פריסות. לא להזיז תמונות.</p>
+          <p>לא לשבת חצי שעה מול המחשב ולהתלבט איזו תמונה לשים איפה.</p>
+          <p><strong>מכניסה את התמונות, והתוכנה בונה לך אלבום שלם:</strong> פריסות מעוצבות, כיתובים ואלמנטים. ומה שלא בדיוק לטעמך, את משנה.</p>
+        </div>
+      </div>
+        <div class="offer-mini">
+          <div class="price-row"><span class="now num">479 ₪</span><span class="was num">1,200 ₪</span><span class="tag" data-launch-label>מחיר השקה · 72 שעות</span></div>
+          <a class="cta lg" href="https://pay.grow.link/Njc4NDc~a0f8480e5bcdb06b411c3984e11fc23f-NDI1Nzg3Ng" data-buy>כן, אני רוצה שהתוכנה תעצב בשבילי <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="trust"><span>רכישה חד־פעמית</span><span>בלי מנוי חודשי</span><span>בלי אינטרנט בזמן העבודה</span></div>
+        </div>
+      <div class="hero-media">
+        <div class="screen"><div class="vctl"><button type="button" class="vbtn" id="vbtn" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg><span>עצירת הסרטון</span></button><button type="button" class="vbtn fs" id="fsbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>מסך מלא</span></button></div><video src="assets/demo-hero.mp4" poster="assets/poster-hero.webp" muted playsinline loop preload="metadata" aria-label="הקלטת מסך: TEZA ALBUM בונה אלבום של 27 תמונות" data-auto></video><script>(function(){var v=document.currentScript.previousElementSibling;if(window.matchMedia&&matchMedia('(max-width:560px)').matches){v.poster='assets/poster-hero-m.webp';v.src='assets/demo-hero-m.mp4';}})();</script></div>
+        <p class="screen-cap"><span class="rec"></span>הקלטת מסך אמיתית מתוך התוכנה. 27 תמונות, 10 דפים מעוצבים, 10 שניות. בלי האצה.</p>
+      </div>
+    </div>
+    <div class="facts"><span><b>מה שלקח לך בין 20 דקות לשעה</b> הופך לכמה קליקים</span><span><b>446</b> כיתובים בעברית ובאנגלית</span><span><b>109</b> אלמנטים עיצוביים</span><span><b>מאות</b> פריסות</span></div>
+  </div>
+</section>
+
+<div class="strip" aria-label="דפים אמיתיים שהתוכנה עיצבה">
+  <div class="strip-track" id="strip"></div>
+  <p class="strip-cap">כל הדפים בפס הזה עוצבו אוטומטית ב-TEZA ALBUM, בלי תיקון ידני.</p>
+</div>
+
+<!-- =============== 2. THE STORY =============== -->
+<section class="paper sec story">
+  <div class="wrap story-grid">
+    <div>
+      <p class="eyebrow">האלבום האחרון שלך</p>
+      <h2 style="margin-top:12px">תחשבי רגע על האלבום האחרון שעיצבת.</h2>
+      <div class="beat">
+        <p>סיימת יום צילום. חזרת עם מאות תמונות.</p>
+        <p>סיננת. עיבדת. שלחת ללקוחה.</p>
+        <p>היא בחרה את התמונות שלה, ואת כבר מריחה את הסוף.</p>
+        <p>נשאר רק לעצב את האלבום. <b>”רק”.</b></p>
+      </div>
+      <div class="beat" id="tick">
+        <p data-min="0">את פותחת את תוכנת העיצוב. מכניסה את התמונות.</p>
+        <p data-min="6">מתחילה לשחק עם הפריסות.</p>
+        <p class="inner" data-min="13">רגע, זאת גדולה מדי.</p>
+        <p class="inner" data-min="19">ופה דווקא צריך שלוש תמונות.</p>
+        <p class="inner" data-min="26">לא, זה לא נראה טוב.</p>
+        <p data-min="34">מחליפה. מזיזה. מסדרת.</p>
+        <p data-min="45">מנסה עוד פריסה. ועוד אחת.</p>
+        <p data-min="58">ופתאום את קולטת שעברה כמעט שעה.</p>
+      </div>
+      <p class="hour">שעה.</p>
+      <div class="beat">
+        <p>על מה? על לסדר תמונות בתוך אלבום.</p>
+        <p class="quiet">ואל תביני אותי לא נכון. את אוהבת אלבומים יפים. את אוהבת שהכול מדויק, שיש סטייל, שהתמונות יושבות בול.</p>
+        <p>אבל כמה זמן אפשר להמשיך לעשות את אותה עבודה טכנית, שוב ושוב?</p>
+        <p><b>והכי מתסכל? מחר מחכה לך עוד אלבום.</b></p>
+      </div>
+    </div>
+    <aside class="clock" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F2409B"/><stop offset=".5" stop-color="#FF6B78"/><stop offset="1" stop-color="#FFA63D"/></linearGradient></defs>
+        <circle class="ring-bg" cx="100" cy="100" r="84"/>
+        <circle class="ring" cx="100" cy="100" r="84" transform="rotate(-90 100 100)" stroke-dasharray="527.8" stroke-dashoffset="527.8" id="ring"/>
+        <text class="mins num" x="100" y="108" text-anchor="middle" id="mins">0</text>
+        <text class="unit" x="100" y="136" text-anchor="middle">דקות</text>
+      </svg>
+      <p>על אלבום אחד.<br>ואת עוד לא סיימת.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- =============== 3. WHAT IT REALLY TAKES =============== -->
+<section class="sec cost">
+  <div class="wrap">
+    <p class="eyebrow">מה זה באמת לוקח ממך</p>
+    <h2 style="margin-top:12px">זה אף פעם לא רק האלבום הזה.</h2>
+    <div class="cost-grid">
+      <div class="stack lines">
+        <p>זה עוד חצי שעה פה. עוד 40 דקות שם.</p>
+        <p>עוד ערב שבו אמרת לעצמך:</p>
+        <p class="qt">אני רק מסיימת את האלבום הזה וסוגרת את המחשב.</p>
+        <p style="margin-top:10px">אבל איכשהו, את עדיין שם. עוד פריסה. עוד תמונה. עוד שינוי קטן.</p>
+      </div>
+      <div>
+        <p class="lead">והרי את כבר יודעת לעצב.</p>
+        <div class="knows">
+          <p>את יודעת מה יפה.</p>
+          <p>את יודעת איזה תמונות מתאימות ביחד.</p>
+          <p>את יודעת בדיוק איך את רוצה שהאלבום ייראה.</p>
+        </div>
+      </div>
+    </div>
+    <p class="why">אז למה את צריכה לבנות אותו <span class="gtext">מחדש בכל פעם?</span></p>
+    <p class="lead" style="margin-top:28px;max-width:46ch">תחשבי כמה אלבומים את מעצבת בחודש, וכמה זמן הולך לך עליהם. זה זמן שאת יכולה להשקיע:</p>
+    <div class="time-uses"><span>בצילום נוסף</span><span>בעסק</span><span>בבית</span><span>או פשוט בעצמך</span></div>
+    <p class="closer">כי בסוף, את צלמת. <b>לא פתחת עסק כדי להעביר שעות בהזזת תמונות ממקום למקום.</b></p>
+  </div>
+</section>
+
+<!-- =============== 4. THE BELIEF =============== -->
+<section class="sec belief">
+  <div class="wrap">
+    <p class="eyebrow">ואולי הבעיה בכלל לא בזמן?</p>
+    <h2 style="margin-top:12px">אולי התרגלת לחשוב שככה זה חייב להיות.</h2>
+    <p class="lead" style="margin-top:22px;max-width:60ch">שבשביל אלבום יפה צריך לעבוד: לבחור פריסה לכל עמוד, לסדר כל תמונה, לבדוק שהכול יושב טוב, לשנות, לדייק. וגם כשאת מוצאת תוכנה עם פריסות מוכנות, את עדיין בוחרת, מכניסה ומסדרת. זה קצת מקצר, אבל את עדיין עושה את רוב העבודה.</p>
+    <div class="compare" role="table" aria-label="מי עושה מה">
+      <div class="crow" role="row"><div role="columnheader">בכל אלבום</div><div role="columnheader">תוכנה עם פריסות מוכנות</div><div role="columnheader">TEZA ALBUM</div></div>
+      <div class="crow" role="row"><div role="cell">מי בוחרת פריסה לכל דף</div><div role="cell" class="you">את</div><div role="cell" class="it">התוכנה</div></div>
+      <div class="crow" role="row"><div role="cell">מי מכניסה ומסדרת כל תמונה</div><div role="cell" class="you">את</div><div role="cell" class="it">התוכנה</div></div>
+      <div class="crow" role="row"><div role="cell">כיתובים ואלמנטים</div><div role="cell" class="you">מחפשת בפינטרסט ובתיקיות</div><div role="cell" class="it">כבר בפנים, לפי סוג האלבום</div></div>
+      <div class="crow" role="row"><div role="cell">מי מחליטה על התוצאה</div><div role="cell" class="you">את</div><div role="cell" class="it">את</div></div>
+    </div>
+    <div class="turn">
+      <p>ומה אם במקום שאת תבני את האלבום, התוכנה הייתה בונה אותו בשבילך?</p>
+      <p>ואת היית רק מחליטה אם את אוהבת את התוצאה.</p>
+      <p class="born">זה בדיוק הרעיון שממנו נולדה <span class="gtext">TEZA ALBUM.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 5. MEET =============== -->
+<section class="sec meet" id="meet">
+  <div class="wrap">
+    <div class="meet-head">
+      <div class="gbar"></div>
+      <h2>תכירי את TEZA ALBUM.<br><span class="gtext">התוכנה שמעצבת את האלבומים שלך בעצמה.</span></h2>
+      <p class="lead">את לא מתחילה לבנות אלבום. את מקבלת אלבום שכבר עוצב עבורך.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-txt">
+          <div class="step-n gtext">01</div>
+          <h3>מכניסה את התמונות.</h3>
+          <p>בוחרת את תיקיית התמונות הערוכות, את גודל האלבום ואת סגנון הרקעים. אם רוצה, גם קבוצת כיתובים לפי סוג האלבום.</p>
+        </div>
+        <div class="screen"><img src="assets/ui/ui-new-album.webp" alt="חלון אלבום חדש ב-TEZA ALBUM: שם האלבום, תיקיית התמונות, גודל וסגנון רקעים" loading="lazy" width="1800" height="1012"></div>
+      </div>
+      <div class="step">
+        <div class="step-txt">
+          <div class="step-n gtext">02</div>
+          <h3>התוכנה בונה את האלבום.</h3>
+          <p>מסדרת את התמונות בפריסות, לפי הכיוון שלהן ולפי הפנים שבהן. לוקחת את צבעי הרקע מתוך התמונות של כל סצנה, ומשלבת כיתובים ואלמנטים. בסוף, הלוגו שלך בעמוד האחרון.</p>
+        </div>
+        <div class="screen"><img src="assets/ui/ui-board.webp" alt="תצוגת אלבום: עשרה דפים מעוצבים שהתוכנה בנתה מ-27 תמונות" loading="lazy" width="1800" height="1012"></div>
+      </div>
+      <div class="step">
+        <div class="step-txt">
+          <div class="step-n gtext">03</div>
+          <h3>את מחליטה על התוצאה.</h3>
+          <div class="can">
+            <p>בא לך להחליף פריסה? <b>אפשר.</b></p>
+            <p>לשנות כיתוב? <b>אפשר.</b></p>
+            <p>להוסיף אלמנט? <b>גם אפשר.</b></p>
+          </div>
+        </div>
+        <div class="screen"><img src="assets/ui/ui-captions.webp" alt="מסך העריכה עם ספריית הכיתובים והאלמנטים" loading="lazy" width="1800" height="1012"></div>
+      </div>
+    </div>
+    <p class="motto">היא עושה את העבודה.<br><span class="gtext">את מחליטה על התוצאה.</span></p>
+  </div>
+</section>
+
+<!-- =============== 6. WHAT YOU GET =============== -->
+<section class="paper sec get">
+  <div class="wrap">
+    <p class="eyebrow">מה משתנה לך בעבודה</p>
+    <h2 style="margin-top:12px">מה את באמת מקבלת.</h2>
+    <div class="bento">
+      <article class="card c-built">
+        <span class="k">אלבום שנבנה בשבילך</span>
+        <h3>במקום עמוד ריק, אלבום שלם.</h3>
+        <p>את מכניסה את התמונות והתוכנה בונה את האלבום. פחות התעסקות, פחות התלבטויות, הרבה פחות עבודה ידנית.</p>
+        <img src="assets/albums/a-04.webp" alt="דף שהתוכנה עיצבה: ילדים על רפסודה במים, פאנל ירוק עמוק בצבע מתוך התמונות" loading="lazy" width="1600" height="600">
+      </article>
+      <article class="card c-layouts">
+        <span class="k">מאגר פריסות</span>
+        <p class="big-n num">200</p>
+        <h3>פריסות לדף עם שתי תמונות בלבד.</h3>
+        <p>מאות פריסות בשני סגנונות: קלאסי עם פאנלים בצבע מהתמונות, ולייף סטייל לבן עם פסיפסים. ככה האלבומים שלך לא חוזרים על אותן שלוש פריסות.</p>
+        <div class="panel"><img src="assets/ui/layouts-panel.webp" alt="לוח הפריסות בתוכנה: הכול 200, קלאסי 176, לייף סטייל 24" loading="lazy" width="447" height="1020"></div>
+      </article>
+      <article class="card c-control">
+        <span class="k">את נשארת בשליטה</span>
+        <h3>אוטומטי לא אומר להתפשר על הטעם שלך.</h3>
+        <div class="control-list">
+          <div>לא אהבת פריסה?<b>תחליפי.</b></div>
+          <div>רוצה לשנות כיתוב?<b>תשני.</b></div>
+          <div>רוצה לדייק את העיצוב?<b>בכיף.</b></div>
+        </div>
+      </article>
+      <article class="card c-caps" id="caps">
+        <span class="k">כיתובים ואלמנטים לכל סוג אלבום</span>
+        <h3>האלבום כמעט מוכן, וחסר כיתוב יפה. אז את מתחילה לחפש בפינטרסט, בקבצים, בתיקיות. או שאת פשוט מוותרת.</h3>
+        <p>ב-TEZA ALBUM הם כבר בפנים, לפי סוג הצילום שלך:</p>
+        <div class="cap-tabs" role="tablist" aria-label="סוגי אלבומים" id="capTabs"></div>
+        <p class="cap-desc" id="capDesc" aria-live="polite"></p>
+        <div class="cap-grid" id="capGrid"></div>
+        <div class="cap-stats"><span><b class="num">210</b> כיתובים בעברית</span><span><b class="num">236</b> באנגלית</span><span><b class="num">109</b> אלמנטים: לבבות, כתרים, פרחים, קווים ומסגרות</span></div>
+      </article>
+      <article class="card c-sub">
+        <span class="k">בלי מנוי חודשי</span>
+        <h3>קונה פעם אחת.</h3>
+        <p>לא משלמת שוב בכל חודש, ולא צריכה לחשב אם השתמשת מספיק כדי להצדיק את המנוי.</p>
+      </article>
+      <article class="card c-off">
+        <span class="k">בלי אינטרנט</span>
+        <h3>פותחת ומעצבת.</h3>
+        <p>אין צורך בחיבור לאינטרנט בזמן העבודה על האלבומים.</p>
+      </article>
+      <article class="card c-files">
+        <span class="k">מוכן ללקוחה ולדפוס</span>
+        <h3>לוחצת ”סיימתי”.</h3>
+        <p>PDF לאישור הלקוחה, קובצי JPG לדפוס ב-300 DPI, ואם צריך גם PSD בשכבות.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 7. ABOUT =============== -->
+<section class="paper sec about" style="background:var(--paper-2)">
+  <div class="wrap about-grid">
+    <div>
+      <div class="giant" aria-hidden="true">HELLO<span class="dot">.</span></div>
+      <div class="lines">
+        <p><strong>אם אנחנו עדיין לא מכירות, נעים מאוד. אני שירה צפדיה.</strong></p>
+        <p>אני צלמת כבר כמעט עשור, ובשנים האחרונות אני גם מלמדת צלמות ב-TEZA Academy. עברו אצלי עשרות תלמידות בתהליכי לימוד, ומאות צלמות השתתפו בהדרכות ובמוצרים שלי.</p>
+        <p>ואם יש משהו שאני מכירה מקרוב, זה את העבודה שמאחורי התמונות היפות. מבחוץ רואים את התמונה, את האלבום, את הסטייל. מי שנמצאת בתחום יודעת כמה זמן הולך על דברים שאף אחת לא רואה.</p>
+        <p>אני אוהבת עיצוב. אוהבת דיוק. אוהבת אלבומים יפים. אבל אני גם מאמינה שצלמת לא צריכה לבזבז שעות על עבודה טכנית שאפשר לפשט.</p>
+        <p><strong>רציתי כלי שלא רק יעזור לצלמות לעצב, אלא יעשה בשבילן את העבודה. ככה נולדה TEZA ALBUM.</strong></p>
+      </div>
+    </div>
+    <div>
+      <div class="me" id="me" hidden><img alt="שירה צפדיה" loading="lazy" id="meImg"></div>
+      <p class="qt">לא עוד תוכנה עם כמה תבניות. תוכנה שבונה את האלבום בעצמה, ונותנת לך להתערב רק כשאת רוצה.</p>
+      <div class="sig"><span>שירה צפדיה</span><img src="assets/teza-white.png" alt="TEZA" width="520" height="137"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 8. PROOF =============== -->
+<section class="sec proof" id="proof">
+  <div class="wrap">
+    <div class="proof-head">
+      <p class="eyebrow">אל תאמיני לי. תראי בעצמך</p>
+      <h2>עזבי דיבורים. <span class="gtext">הנה זה קורה.</span></h2>
+      <p class="lead">הקלטת מסך רציפה, בזמן אמת: בחירת התיקייה, בניית האלבום, הפריסות, הכיתובים ותצוגת האלבום המלאה. השעון בפינה רץ מהלחיצה על ”יצירת האלבום” ועד שהאלבום מוכן.</p>
+    </div>
+    <div class="screen"><video src="assets/demo.mp4" poster="assets/poster-done.webp" controls playsinline preload="metadata" aria-label="סרטון הדגמה מלא של TEZA ALBUM"></video></div>
+    <div class="measure">
+      <div><b class="num">27</b><span>תמונות בתיקייה</span></div>
+      <div><b class="num">10</b><span>דפים מעוצבים</span></div>
+      <div><b class="num">10 שנ׳</b><span>מהלחיצה ועד אלבום מוכן</span></div>
+      <div><b>0</b><span>האצה ותיקונים ידניים</span></div>
+    </div>
+    <div class="albums">
+      <h3>שלושה אלבומים מלאים, בדיוק כמו שהתוכנה בנתה אותם.</h3>
+      <p class="lead" style="margin-top:10px">לא עמודי דוגמה נבחרים: כל הדפים של כל אלבום, בלי שום תיקון ידני.</p>
+      <div class="al-tabs" role="tablist" aria-label="אלבומים" id="alTabs"></div>
+      <div class="viewer">
+        <img class="spread" id="spread" alt="" width="1600" height="600">
+        <div class="v-bar">
+          <span class="pos num" id="pos"></span>
+          <div class="v-nav"><button type="button" id="prev" aria-label="הדף הקודם"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button><button type="button" id="next" aria-label="הדף הבא"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button></div>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+    </div>
+    <p class="ask">ועכשיו שאלה אחת:<br><b>למה אני עדיין מעצבת אלבומים בדרך הישנה?</b></p>
+  </div>
+</section>
+
+<!-- =============== 9. THE MATH =============== -->
+<section class="paper sec calc">
+  <div class="wrap">
+    <p class="eyebrow">המחיר האמיתי של הזמן שלך</p>
+    <h2 style="margin-top:12px">בואי נעשה חשבון קטן.</h2>
+    <div class="calc-grid">
+      <div class="sliders">
+        <div class="sl"><label for="sAlbums">אלבומים בחודש <output id="oAlbums" class="num">8</output></label><input type="range" id="sAlbums" min="1" max="30" value="8"></div>
+        <div class="sl"><label for="sMins">דקות לאלבום היום <output id="oMins" class="num">40</output></label><input type="range" id="sMins" min="10" max="120" step="5" value="40"></div>
+        <div class="sl"><label for="sRate">שווי שעת עבודה שלך <output id="oRate" class="num">100 ₪</output></label><input type="range" id="sRate" min="50" max="400" step="10" value="100"></div>
+        <div class="sl"><label>דקות לאלבום עם TEZA ALBUM <output class="num">5</output></label><small>הנחה לצורך החישוב: בנייה אוטומטית ועוד כמה דיוקים.</small></div>
+      </div>
+      <div class="res" aria-live="polite">
+        <div class="row"><span>זמן שמתפנה לך בחודש</span><b id="rTime">4 שעות ו-40 דקות</b></div>
+        <div class="row"><span>שווי הזמן הזה בחודש</span><b class="num" id="rVal">467 ₪</b></div>
+        <div class="bars">
+          <div class="bar v"><span>שווי חודש אחד</span><i id="bVal"></i><b class="num" id="bValN">467 ₪</b></div>
+          <div class="bar"><span>מחיר ההשקה</span><i id="bPrice"></i><b class="num">479 ₪</b></div>
+        </div>
+        <div class="row"><span>ובשנה שלמה</span><b class="num" id="rYear">5,600 ₪</b></div>
+      </div>
+    </div>
+    <p class="disc">זו דוגמה להמחשה. הזמן שתחסכי בפועל תלוי בכמות התמונות, במורכבות האלבום ובשינויים שתרצי לבצע. אבל תחשבי מה המשמעות של תהליך עבודה מהיר יותר לאורך חודשים ושנים.</p>
+    <div class="after"><p>פחות שעות על המחשב.</p><p>פחות משימות שנגררות.</p><p><b>יותר זמן לדברים שבאמת חשובים לך.</b></p></div>
+  </div>
+</section>
+
+<!-- =============== 10. OFFER =============== -->
+<section class="sec offer" id="offer">
+  <div class="wrap">
+    <div class="box"><div class="box-in">
+      <p class="eyebrow">הצעת ההשקה</p>
+      <h2>תוכנה שעובדת בשבילך שוב ושוב.</h2>
+      <div class="uses"><span>באלבום הראשון</span><span>בשני</span><span>בעשירי</span><span>ובכל אלבום שיבוא אחריהם</span></div>
+      <div class="big-price">
+        <div class="now num" data-price>479<small>₪</small></div>
+        <div class="meta"><span class="was">מחיר מלא: <s class="num">1,200 ₪</s></span><span class="save num">721 ₪ פחות · כ-60% הנחה</span></div>
+      </div>
+      <div class="timer" id="timer" hidden><span>מחיר ההשקה מסתיים בעוד</span><div class="t num" id="tval"></div></div>
+      <p class="note" id="launchNote" style="color:var(--muted)">מחיר ההשקה תקף ל-72 שעות בלבד מרגע פתיחת ההשקה. אחר כך המחיר עולה ל-1,200 ₪.</p>
+      <div class="incl">
+        <p>תוכנה אוטומטית לעיצוב אלבומים</p>
+        <p>מאות פריסות, בקלאסי ובלייף סטייל</p>
+        <p>כיתובים ואלמנטים לכל סוגי האלבומים</p>
+        <p>שליטה מלאה בכל פריסה, כיתוב ואלמנט</p>
+        <p>רכישה חד־פעמית, בלי מנוי</p>
+        <p>בלי צורך באינטרנט בזמן העבודה</p>
+        <p>16 סרטוני הדרכה קצרים, מההתקנה ועד הייצוא</p>
+        <p>גישה מיידית לאזור הרוכשות</p>
+      </div>
+      <a class="cta lg" href="https://pay.grow.link/Njc4NDc~a0f8480e5bcdb06b411c3984e11fc23f-NDI1Nzg3Ng" data-buy>אני רוצה את TEZA ALBUM במחיר ההשקה <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <div class="trust"><span>תשלום מאובטח</span><span>קבלה נשלחת אלייך למייל</span><span>פרטי כניסה מיד אחרי התשלום</span></div>
+      <p class="legal-note">ברכישה את מאשרת את <a href="https://shiru178.github.io/album/terms/" target="_blank" rel="noopener">תנאי הרכישה והשימוש</a>.</p>
+    </div></div>
+  </div>
+</section>
+
+<!-- =============== 11. FAQ =============== -->
+<section class="paper sec faq">
+  <div class="narrow">
+    <p class="eyebrow">השאלות שעוברות לך בראש</p>
+    <h2 style="margin-top:12px">בואי נענה עליהן.</h2>
+    <div class="chat">
+      <p class="q">אני לא ממש טכנולוגית. אני אסתדר עם זה?</p>
+      <p class="a">התוכנה תוכננה להיות פשוטה. את לא מתחילה לעצב מאפס: היא בונה את האלבום, ואת משנה מה שבא לך. ובאזור הרוכשות מחכים לך 16 סרטוני הדרכה קצרים, מההתקנה ועד הייצוא.</p>
+      <p class="q">אבל אני אוהבת שהאלבומים שלי נראים בסגנון שלי.</p>
+      <p class="a">מעולה. בדיוק בשביל זה יש התאמה אישית: בוחרים סגנון רקעים וכמות תמונות בדף, ואחר כך משנים כל פריסה, כיתוב ואלמנט שלא מתאימים לטעם שלך.</p>
+      <p class="q">יש לי כבר תוכנה לעיצוב אלבומים.</p>
+      <p class="a">יכול להיות שהיא מצוינת. השאלה היא כמה עבודה את עדיין עושה בעצמך. אם את עדיין בוחרת ומסדרת פריסות ידנית, שווה לך לראות מה TEZA ALBUM חוסכת.</p>
+      <p class="q">ומה לגבי כיתובים ואלמנטים?</p>
+      <p class="a">יש בתוכנה 446 כיתובים בעברית ובאנגלית ו-109 אלמנטים, לניו בורן, גיל שנה, חלאקה, בר ובת מצווה, הריון, משפחה ועוד.</p>
+      <p class="q">איך אני מקבלת את התוכנה?</p>
+      <p class="a">מיד אחרי התשלום נשלחים אלייך למייל פרטי כניסה לאזור הרוכשות של TEZA ALBUM. שם מחכים קובצי ההתקנה ל-Windows ול-Mac, ו-16 סרטוני הדרכה קצרים.</p>
+      <p class="q">על איזה מחשב היא עובדת?</p>
+      <p class="a">Windows, ו-Mac (גם במעבדי אפל וגם באינטל).</p>
+      <p class="q">באילו גדלים אפשר לעצב?</p>
+      <p class="a">דפים של 56×21, 60×30, 80×30, 50×25 ו-40×20, או כל מידה אחרת שתזיני. יש גם עיצוב כריכה.</p>
+      <p class="q">אני צריכה לשלם בכל חודש?</p>
+      <p class="a">לא. הרכישה חד־פעמית.</p>
+      <p class="q">ואם אין לי אינטרנט?</p>
+      <p class="a">אין צורך בחיבור לאינטרנט בזמן העבודה בתוכנה.</p>
+      <p class="q">מה קורה אחרי 72 שעות?</p>
+      <p class="a">מחיר ההשקה מסתיים, והמחיר עולה ל-1,200 ₪.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 12. BEFORE YOU DECIDE =============== -->
+<section class="sec decide">
+  <div class="wrap">
+    <p class="eyebrow">רגע לפני שאת מחליטה</p>
+    <h2 style="margin-top:12px">תחשבי על האלבום הבא שאת צריכה לעצב.</h2>
+    <div class="paths">
+      <div class="path old">
+        <h3>כמו שעיצבת עד היום</h3>
+        <ol><li>לפתוח את התוכנה שאת רגילה אליה</li><li>לבחור פריסות</li><li>לסדר תמונות</li><li>להתלבט</li><li>לשנות</li><li>ולהמשיך כמו עד היום</li></ol>
+      </div>
+      <div class="path new">
+        <h3>עם TEZA ALBUM</h3>
+        <ol><li>להכניס את התמונות</li><li>לתת לתוכנה לבנות את האלבום</li><li>להסתכל על התוצאה</li><li>לשנות רק מה שאת רוצה</li></ol>
+      </div>
+    </div>
+    <div class="not">
+      <p>לא כי את לא יודעת לעצב. בדיוק להפך.</p>
+      <p>כי את יודעת לעצב. כי יש לך טעם. כי יש לך סטייל.</p>
+      <p><b>ואת לא צריכה להוכיח את זה כל פעם מחדש עם עוד שעה מול המחשב.</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 13. CLOSE =============== -->
+<section class="sec close" style="padding-top:0">
+  <div class="wrap">
+    <div class="triad"><span>את מצלמת.</span><span>היא מעצבת.</span><span class="gtext">את מחליטה.</span></div>
+    <div class="recap"><span>16 סרטוני הדרכה</span><span>עיצוב אוטומטי</span><span>מאות פריסות</span><span>כיתובים ואלמנטים</span><span>התאמה אישית</span><span>בלי מנוי</span><span>בלי אינטרנט בזמן העבודה</span></div>
+    <div class="price-row"><span class="now num">479 ₪</span><span class="was num">1,200 ₪</span><span class="tag">חיסכון של 721 ₪</span></div>
+    <a class="cta lg" href="https://pay.grow.link/Njc4NDc~a0f8480e5bcdb06b411c3984e11fc23f-NDI1Nzg3Ng" data-buy>כן, אני רוצה את TEZA ALBUM ב-479 ₪ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <p class="legal-note">ברכישה את מאשרת את <a href="https://shiru178.github.io/album/terms/" target="_blank" rel="noopener">תנאי הרכישה והשימוש</a>.</p>
+    <p class="worth">כי הזמן שלך שווה הרבה יותר מעוד שעה על עיצוב אלבום.</p>
+    <p class="slogan">את התמונות <b>את מצלמת.</b><br>את האלבום <b class="gtext">התוכנה מעצבת.</b></p>
+    <div class="love"><span>באהבה,</span><strong>שירה צפדיה</strong><span>TEZA Academy</span></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top" aria-label="TEZA ALBUM"><img src="assets/teza-white.png" alt="TEZA" width="520" height="137"><span>ALBUM</span></a>
+    <p><span>TEZA ACADEMY</span><span>tezaschool.co.il</span><span>teza.zilum@gmail.com</span><span class="num">054-79-29148</span><a href="https://shiru178.github.io/album/terms/" target="_blank" rel="noopener">תנאי רכישה ושימוש</a><a href="https://shiru178.github.io/album/privacy/" target="_blank" rel="noopener">מדיניות פרטיות</a><a href="https://shiru178.github.io/album/accessibility/" target="_blank" rel="noopener">הצהרת נגישות</a></p>
+  </div>
+</footer>
+
+<button type="button" class="a11y-btn" id="a11yBtn" aria-expanded="false" aria-controls="a11yPanel" aria-label="תפריט נגישות"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.2" r="1.7" fill="currentColor" stroke="none"/><path d="M5 8.2l7 1.6 7-1.6M12 9.8v4.6M12 14.4l-3.2 6M12 14.4l3.2 6"/></svg></button>
+<div class="a11y-panel" id="a11yPanel" role="dialog" aria-label="תפריט נגישות" hidden>
+  <h2>נגישות</h2>
+  <button type="button" class="opt" data-a11y="size" aria-pressed="false">הגדלת טקסט</button>
+  <button type="button" class="opt" data-a11y="contrast" aria-pressed="false">ניגודיות גבוהה</button>
+  <button type="button" class="opt" data-a11y="still" aria-pressed="false">עצירת אנימציות וסרטונים</button>
+  <button type="button" class="opt" data-a11y="links" aria-pressed="false">הדגשת קישורים</button>
+  <button type="button" class="opt" data-a11y="font" aria-pressed="false">גופן קריא</button>
+  <div class="row2"><a href="https://shiru178.github.io/album/accessibility/" target="_blank" rel="noopener">הצהרת נגישות</a><button type="button" class="reset" id="a11yReset">איפוס</button></div>
+</div>
+
+<div class="buybar" id="buybar" aria-hidden="true">
+  <div class="p"><b class="num">479 ₪</b><span data-bar-sub>במקום 1,200 ₪ · מחיר השקה</span></div>
+  <a class="cta" href="https://pay.grow.link/Njc4NDc~a0f8480e5bcdb06b411c3984e11fc23f-NDI1Nzg3Ng" data-buy tabindex="-1">לרכישה</a>
+</div>
+
+</div>
+
+<script>
+(() => {
+  // ===== settings =====
+  const CHECKOUT_URL = 'https://pay.grow.link/Njc4NDc~a0f8480e5bcdb06b411c3984e11fc23f-NDI1Nzg3Ng';
+  // Launch start, e.g. '2026-11-10T20:00:00+02:00'. Empty: no countdown, the page just says "72 hours from launch".
+  const LAUNCH_START = '';
+  const LAUNCH_HOURS = 72;
+  // Her portrait for the "HELLO." section, e.g. 'assets/shira.webp'. Empty: the section runs without a photo.
+  const ME_PHOTO = '';
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fmt = (n) => Math.round(n).toLocaleString('en-US');
+
+  // ===== accessibility settings (kept in this browser only) =====
+  const A11Y_KEY = 'teza-album-a11y';
+  let a11y = {};
+  try { a11y = JSON.parse(localStorage.getItem(A11Y_KEY) || '{}') || {}; } catch (e) { a11y = {}; }
+  const root = document.documentElement;
+  const applyA11y = () => {
+    root.classList.toggle('a11y-big', a11y.size === 1);
+    root.classList.toggle('a11y-bigger', a11y.size === 2);
+    ['contrast', 'still', 'links', 'font'].forEach(k => root.classList.toggle('a11y-' + k, !!a11y[k]));
+    document.querySelectorAll('[data-a11y]').forEach(b => {
+      const k = b.dataset.a11y;
+      b.setAttribute('aria-pressed', String(k === 'size' ? !!a11y.size : !!a11y[k]));
+      if (k === 'size') b.textContent = a11y.size === 2 ? 'הגדלת טקסט (גדול מאוד)' : a11y.size === 1 ? 'הגדלת טקסט (גדול)' : 'הגדלת טקסט';
+    });
+    try { localStorage.setItem(A11Y_KEY, JSON.stringify(a11y)); } catch (e) { /* private window */ }
+    syncVideo();
+  };
+  const panel = $('#a11yPanel'), a11yBtn = $('#a11yBtn');
+  const openPanel = (on) => { panel.hidden = !on; a11yBtn.setAttribute('aria-expanded', String(on)); if (on) panel.querySelector('button').focus(); };
+  a11yBtn.addEventListener('click', () => openPanel(panel.hidden));
+  panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') { openPanel(false); a11yBtn.focus(); } });
+  document.addEventListener('click', (e) => { if (!panel.hidden && !panel.contains(e.target) && !a11yBtn.contains(e.target)) openPanel(false); });
+  panel.querySelectorAll('[data-a11y]').forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.a11y;
+    if (k === 'size') a11y.size = ((a11y.size || 0) + 1) % 3; else a11y[k] = !a11y[k];
+    applyA11y();
+  }));
+  $('#a11yReset').addEventListener('click', () => { a11y = {}; applyA11y(); });
+
+  // ===== hero video: plays muted when visible, with a real pause button =====
+  const hv = $('video[data-auto]'), vbtn = $('#vbtn');
+  let userPaused = reduce, heroVisible = false, full = false;
+  function syncVideo() {
+    if (!hv || full) return;
+    const stop = userPaused || a11y.still;
+    if (stop || !heroVisible) hv.pause(); else hv.play().catch(() => {});
+    if (vbtn) { vbtn.setAttribute('aria-pressed', String(!!stop)); vbtn.querySelector('span').textContent = stop ? 'הפעלת הסרטון' : 'עצירת הסרטון'; vbtn.querySelector('svg').innerHTML = stop ? '<path d="M7 4.5v15l12-7.5z"/>' : '<rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/>'; }
+  }
+  if (hv) {
+    new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; syncVideo(); }, { threshold: .25 }).observe(hv);
+    vbtn.addEventListener('click', () => { userPaused = !(userPaused || a11y.still); if (!userPaused && a11y.still) { a11y.still = false; applyA11y(); } syncVideo(); });
+  }
+  // full screen: native controls inside, back to the muted loop on exit
+  const fsbtn = $('#fsbtn');
+  if (hv && fsbtn) {
+    const canFull = hv.requestFullscreen || hv.webkitRequestFullscreen || hv.webkitEnterFullscreen;
+    const openFull = () => {
+      full = true; hv.controls = true;
+      try {
+        const r = hv.requestFullscreen ? hv.requestFullscreen() : hv.webkitRequestFullscreen ? hv.webkitRequestFullscreen() : hv.webkitEnterFullscreen();
+        if (r && r.then) r.then(() => { try { screen.orientation.lock('landscape').catch(() => {}); } catch (e) { /* not supported */ } }).catch(closeFull);
+      } catch (e) { closeFull(); return; }
+      hv.play().catch(() => {});
+    };
+    const closeFull = () => { full = false; hv.controls = false; syncVideo(); };
+    const onChange = () => { if (!document.fullscreenElement && !document.webkitFullscreenElement) closeFull(); };
+    if (!canFull) fsbtn.hidden = true;
+    else {
+      fsbtn.addEventListener('click', openFull);
+      hv.addEventListener('click', () => { if (!full) openFull(); });
+      document.addEventListener('fullscreenchange', onChange);
+      document.addEventListener('webkitfullscreenchange', onChange);
+      hv.addEventListener('webkitendfullscreen', closeFull);
+    }
+  }
+  applyA11y();
+
+  // ===== strip of spreads =====
+  const strip = $('#strip');
+  const stripImgs = ['a-01','c-02','b-08','a-03','c-04','b-01','a-06','c-06','b-05','a-10','c-08','b-10'];
+  const one = stripImgs.map(n => `<img src="assets/albums/${n}-s.webp" alt="" loading="lazy" width="480" height="180">`).join('');
+  strip.innerHTML = one + `<span style="display:contents" aria-hidden="true">${one}</span>`;
+
+  // ===== the clock in the story =====
+  const ticks = [...document.querySelectorAll('#tick [data-min]')];
+  const ring = $('#ring'), mins = $('#mins'), C = 527.8;
+  let shown = 0;
+  const setClock = (m) => { ring.style.strokeDashoffset = C * (1 - m / 60); mins.textContent = m; };
+  const onScroll = () => {
+    const line = innerHeight * 0.62;
+    let m = 0;
+    for (const p of ticks) if (p.getBoundingClientRect().top < line) m = +p.dataset.min;
+    if (ticks[0].getBoundingClientRect().top >= line) m = 0;
+    if (m !== shown) { shown = m; setClock(m); }
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ===== captions per album type =====
+  const CAPS = {"ניו בורן":["c01.webp","c02.webp","c03.webp","c04.webp","c05.webp","c06.webp"],"גיל שנה":["c07.webp","c08.webp","c09.webp","c10.webp","c11.webp","c12.webp"],"חלאקה":["c13.webp","c14.webp","c15.webp","c16.webp","c17.webp","c18.webp"],"בר מצווה":["c19.webp","c20.webp","c21.webp","c22.webp","c23.webp","c24.webp"],"בת מצווה":["c25.webp","c26.webp","c27.webp","c28.webp","c29.webp","c30.webp"],"משפחה":["c31.webp","c32.webp","c33.webp","c34.webp","c35.webp","c36.webp"],"כללי":["c37.webp","c38.webp","c39.webp","c40.webp","c41.webp","c42.webp"],"הריון":["c43.webp","c44.webp","c45.webp","c46.webp","c47.webp","c51.webp"]};
+  const DESC = {
+    'ניו בורן': 'כיתובים עדינים, פרטי לידה ואלמנטים מתאימים.',
+    'גיל שנה': 'עיצובים מתוקים וכיתובים חגיגיים.',
+    'חלאקה': 'אלמנטים וכיתובים לגיל שלוש.',
+    'בר מצווה': 'עיצוב בוגר, נקי ומוקפד.',
+    'בת מצווה': 'טיפוגרפיות ואלמנטים מלאי סטייל.',
+    'הריון': 'כיתובים עדינים על ציפייה, אהבה והתחלה חדשה.',
+    'משפחה': 'משפטים של ביחד, אהבה ורגעים משותפים.',
+    'כללי': 'ומאגר כללי שמתאים לעוד מגוון אלבומים.',
+  };
+  const ORDER = ['ניו בורן', 'גיל שנה', 'חלאקה', 'בר מצווה', 'בת מצווה', 'הריון', 'משפחה', 'כללי'];
+  const capTabs = $('#capTabs'), capGrid = $('#capGrid'), capDesc = $('#capDesc');
+  const showCaps = (g) => {
+    capTabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.g === g)));
+    capDesc.textContent = g + ': ' + DESC[g];
+    capGrid.innerHTML = CAPS[g].map(f => `<div><img src="assets/caps/${f}" alt="כיתוב ${g}" loading="lazy"></div>`).join('');
+  };
+  ORDER.forEach(g => { const b = document.createElement('button'); b.type = 'button'; b.role = 'tab'; b.dataset.g = g; b.textContent = g; b.onclick = () => showCaps(g); capTabs.append(b); });
+  showCaps('ניו בורן');
+
+  // ===== album viewer =====
+  const ALBUMS = [
+    { k: 'a', n: 10, name: 'גיל שנה בטבע', style: 'רקע בצבע מתוך התמונות' },
+    { k: 'b', n: 10, name: 'גיל שנה בסטודיו', style: 'רקע בצבע מתוך התמונות' },
+    { k: 'c', n: 8, name: 'גיל שנה בטבע', style: 'לייף סטייל, דף לבן' },
+  ];
+  const alTabs = $('#alTabs'), spread = $('#spread'), pos = $('#pos'), thumbs = $('#thumbs');
+  let al = 0, pg = 0;
+  const src = (a, i, s = '') => `assets/albums/${a.k}-${String(i + 1).padStart(2, '0')}${s}.webp`;
+  const paint = () => {
+    const a = ALBUMS[al];
+    spread.src = src(a, pg);
+    spread.alt = `${a.name}, דף ${pg + 1} מתוך ${a.n}, כפי שהתוכנה עיצבה אותו`;
+    pos.textContent = `דף ${pg + 1} מתוך ${a.n}`;
+    thumbs.querySelectorAll('button').forEach((b, i) => b.setAttribute('aria-current', String(i === pg)));
+    if (pg + 1 < a.n) { const im = new Image(); im.src = src(a, pg + 1); }
+  };
+  const openAlbum = (i) => {
+    al = i; pg = 0;
+    alTabs.querySelectorAll('button').forEach((b, j) => b.setAttribute('aria-selected', String(j === i)));
+    const a = ALBUMS[i];
+    thumbs.innerHTML = '';
+    for (let j = 0; j < a.n; j++) {
+      const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', `דף ${j + 1}`);
+      b.innerHTML = `<img src="${src(a, j, '-s')}" alt="" loading="lazy" width="480" height="180">`;
+      b.onclick = () => { pg = j; paint(); };
+      thumbs.append(b);
+    }
+    paint();
+  };
+  ALBUMS.forEach((a, i) => { const b = document.createElement('button'); b.type = 'button'; b.role = 'tab'; b.innerHTML = `${a.name}<small>${a.style} · ${a.n} דפים</small>`; b.onclick = () => openAlbum(i); alTabs.append(b); });
+  $('#next').onclick = () => { pg = (pg + 1) % ALBUMS[al].n; paint(); };
+  $('#prev').onclick = () => { pg = (pg - 1 + ALBUMS[al].n) % ALBUMS[al].n; paint(); };
+  let sx = null;
+  spread.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  spread.addEventListener('touchend', e => { if (sx === null) return; const d = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(d) > 40) (d > 0 ? $('#next') : $('#prev')).click(); });
+  openAlbum(0);
+
+  // ===== the math =====
+  const sA = $('#sAlbums'), sM = $('#sMins'), sR = $('#sRate'), PRICE = 479, WITH = 5;
+  const hm = (min) => { const h = Math.floor(min / 60), m = Math.round(min % 60); if (!h) return `${m} דקות`; if (!m) return h === 1 ? 'שעה' : `${h} שעות`; return `${h === 1 ? 'שעה' : h + ' שעות'} ו-${m} דקות`; };
+  const calc = () => {
+    const a = +sA.value, m = +sM.value, r = +sR.value;
+    $('#oAlbums').textContent = a; $('#oMins').textContent = m; $('#oRate').textContent = r + ' ₪';
+    const saved = a * Math.max(0, m - WITH), val = saved / 60 * r;
+    $('#rTime').textContent = hm(saved);
+    $('#rVal').textContent = fmt(val) + ' ₪'; $('#bValN').textContent = fmt(val) + ' ₪';
+    $('#rYear').textContent = fmt(val * 12) + ' ₪';
+    const max = Math.max(val, PRICE);
+    $('#bVal').style.width = (val / max * 100) + '%'; $('#bPrice').style.width = (PRICE / max * 100) + '%';
+  };
+  [sA, sM, sR].forEach(s => s.addEventListener('input', calc));
+  calc();
+
+  // ===== launch countdown (only with a real start time) =====
+  const start = LAUNCH_START && !LAUNCH_START.startsWith('{{') ? Date.parse(LAUNCH_START) : NaN;
+  if (!isNaN(start)) {
+    const end = start + LAUNCH_HOURS * 3600e3, timer = $('#timer'), tval = $('#tval');
+    const tick = () => {
+      const left = end - Date.now();
+      if (left <= 0) { endLaunch(); return; }
+      if (Date.now() < start) { timer.hidden = true; setTimeout(tick, 1000); return; }
+      timer.hidden = false;
+      const s = Math.floor(left / 1000), d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), mi = Math.floor(s % 3600 / 60), se = s % 60;
+      const u = (v, l) => `<span>${String(v).padStart(2, '0')}<small>${l}</small></span>`;
+      tval.innerHTML = (d ? u(d, 'ימים') : '') + u(h, 'שעות') + u(mi, 'דקות') + u(se, 'שניות');
+      setTimeout(tick, 1000);
+    };
+    tick();
+  }
+  function endLaunch() {
+    // after 72 hours the launch link must not keep selling at 479
+    document.querySelectorAll('[data-buy]').forEach(a => { a.setAttribute('aria-disabled', 'true'); a.removeAttribute('href'); });
+    $('#timer').hidden = true;
+    $('#launchNote').textContent = 'מחיר ההשקה הסתיים. לפרטים על רכישה במחיר המלא: teza.zilum@gmail.com';
+    document.querySelectorAll('[data-launch-label]').forEach(e => { e.textContent = 'מחיר ההשקה הסתיים'; });
+  }
+
+  // ===== about photo =====
+  if (ME_PHOTO) { $('#meImg').src = ME_PHOTO; $('#me').hidden = false; }
+
+  // ===== sticky buy bar after the hero, hidden over the offer =====
+  const bar = $('#buybar');
+  let pastHero = false, atOffer = false, atEnd = false;
+  const sync = () => { const on = pastHero && !atOffer && !atEnd; bar.classList.toggle('on', on); bar.setAttribute('aria-hidden', String(!on)); bar.querySelector('a').tabIndex = on ? 0 : -1; };
+  new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting && e.boundingClientRect.top < 0; sync(); }).observe($('.hero .offer-mini'));
+  new IntersectionObserver(([e]) => { atOffer = e.isIntersecting; sync(); }, { threshold: .2 }).observe($('#offer .box'));
+  const ends = new Set();
+  const endObs = new IntersectionObserver((es) => { es.forEach(e => e.isIntersecting ? ends.add(e.target) : ends.delete(e.target)); atEnd = ends.size > 0; sync(); });
+  endObs.observe($('.close .cta')); endObs.observe($('footer'));
+})();
+</script>
+
+</body>
+</html>
