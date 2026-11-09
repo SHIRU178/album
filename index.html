@@ -1070,7 +1070,10 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
   const bar = $('#buybar');
   let pastHero = false, atOffer = false, atEnd = false;
   const sync = () => { const on = pastHero && !atOffer && !atEnd; bar.classList.toggle('on', on); bar.setAttribute('aria-hidden', String(!on)); bar.querySelector('a').tabIndex = on ? 0 : -1; };
-  new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting && e.boundingClientRect.top < 0; sync(); }).observe($('.hero .offer-mini'));
+  // measured on scroll: an observer misses a jump from below the hero straight back to the top
+  const heroBuy = $('.hero .offer-mini');
+  const checkHero = () => { const p = heroBuy.getBoundingClientRect().bottom < 0; if (p !== pastHero) { pastHero = p; sync(); } };
+  addEventListener('scroll', checkHero, { passive: true }); addEventListener('resize', checkHero); checkHero();
   new IntersectionObserver(([e]) => { atOffer = e.isIntersecting; sync(); }, { threshold: .2 }).observe($('#offer .box'));
   const ends = new Set();
   const endObs = new IntersectionObserver((es) => { es.forEach(e => e.isIntersecting ? ends.add(e.target) : ends.delete(e.target)); atEnd = ends.size > 0; sync(); });
