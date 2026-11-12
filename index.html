@@ -1119,7 +1119,7 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
     clocks.forEach(c => { c.hidden = true; });
     document.querySelectorAll('[data-promo]').forEach(e => { e.hidden = true; });
     document.querySelectorAll('[data-full]').forEach(e => { e.hidden = false; });
-    document.querySelectorAll('.cta[data-buy]').forEach(a => { a.setAttribute('aria-disabled', 'true'); a.removeAttribute('href'); a.textContent = 'הרכישה תיפתח בקרוב'; });
+    document.querySelectorAll('[data-buy]').forEach(a => { a.setAttribute('aria-disabled', 'true'); a.removeAttribute('href'); if (a.classList.contains('cta')) a.textContent = 'הרכישה תיפתח בקרוב'; });
     PRICE = 1200; calc();
   }
 
