@@ -68,7 +68,7 @@ section{position:relative}
 .cta:focus-visible,.page button:focus-visible,.page a:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
 .cta svg{flex:none;transform:scaleX(-1)}
 .cta.lg{font-size:1.18rem;padding:1.15em 2.1em}
-.cta[aria-disabled="true"]{pointer-events:none;opacity:.5}
+.cta[aria-disabled="true"]{pointer-events:none;background:none;border:1px solid var(--line-2);color:var(--muted);box-shadow:none}
 .trust{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.92rem;color:var(--muted)}
 .trust span{display:inline-flex;align-items:center;gap:7px}
 .trust span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--coral)}
@@ -456,7 +456,7 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
   <div class="wrap">
     <header class="top">
       <a class="brand" href="#top" aria-label="TEZA ALBUM"><img src="assets/teza-white.png" alt="TEZA" width="520" height="137"><span>ALBUM</span></a>
-      <a class="mini" href="https://pay.grow.link/Njc4NDc~a0f8480e5bcdb06b411c3984e11fc23f-NDI1Nzg3Ng" data-buy>מחיר השקה <b class="num">479 ₪</b></a>
+      <a class="mini" href="https://pay.grow.link/Njc4NDc~a0f8480e5bcdb06b411c3984e11fc23f-NDI1Nzg3Ng" data-buy data-promo>מחיר השקה <b class="num">479 ₪</b></a>
     </header>
     <div class="hero-grid">
       <div class="hero-txt">
@@ -469,7 +469,7 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
         </div>
       </div>
         <div class="offer-mini">
-          <div class="price-row"><span class="now num">479 ₪</span><span class="was num">1,200 ₪</span><span class="tag" data-launch-label>מחיר השקה</span></div>
+          <div class="price-row"><span class="now num" data-promo>479 ₪</span><span class="now num" data-full hidden>1,200 ₪</span><span class="was num" data-promo>1,200 ₪</span><span class="tag" data-promo>מחיר השקה</span></div>
           <div class="cd cd-sm" data-cd role="timer" aria-label="מחיר ההשקה מסתיים ביום חמישי, 12.11, בשעה 22:00" hidden>
           <p class="cd-h"><span class="cd-dot" aria-hidden="true"></span>מחיר ההשקה נגמר בעוד</p>
           <div class="cd-row" aria-hidden="true">
@@ -758,7 +758,7 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
         <div class="row"><span>שווי הזמן הזה בחודש</span><b class="num" id="rVal">467 ₪</b></div>
         <div class="bars">
           <div class="bar v"><span>שווי חודש אחד</span><i id="bVal"></i><b class="num" id="bValN">467 ₪</b></div>
-          <div class="bar"><span>מחיר ההשקה</span><i id="bPrice"></i><b class="num">479 ₪</b></div>
+          <div class="bar"><span data-promo>מחיר ההשקה</span><span data-full hidden>מחיר התוכנה</span><i id="bPrice"></i><b class="num" data-promo>479 ₪</b><b class="num" data-full hidden>1,200 ₪</b></div>
         </div>
         <div class="row"><span>ובשנה שלמה</span><b class="num" id="rYear">5,600 ₪</b></div>
       </div>
@@ -772,12 +772,13 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
 <section class="sec offer" id="offer">
   <div class="wrap">
     <div class="box"><div class="box-in">
-      <p class="eyebrow">הצעת ההשקה</p>
+      <p class="eyebrow" data-promo>הצעת ההשקה</p><p class="eyebrow" data-full hidden>TEZA ALBUM</p>
       <h2>תוכנה שעובדת בשבילך שוב ושוב.</h2>
       <div class="uses"><span>באלבום הראשון</span><span>בשני</span><span>בעשירי</span><span>ובכל אלבום שיבוא אחריהם</span></div>
       <div class="big-price">
-        <div class="now num" data-price>479<small>₪</small></div>
-        <div class="meta"><span class="was">מחיר מלא: <s class="num">1,200 ₪</s></span><span class="save num">721 ₪ פחות · כ-60% הנחה</span></div>
+        <div class="now num" data-price data-promo>479<small>₪</small></div>
+        <div class="now num" data-full hidden>1,200<small>₪</small></div>
+        <div class="meta" data-promo><span class="was">מחיר מלא: <s class="num">1,200 ₪</s></span><span class="save num">721 ₪ פחות · כ-60% הנחה</span></div>
       </div>
       <div class="cd cd-lg" data-cd role="timer" aria-label="מחיר ההשקה מסתיים ביום חמישי, 12.11, בשעה 22:00" hidden>
           <p class="cd-h"><span class="cd-dot" aria-hidden="true"></span>מחיר ההשקה נגמר בעוד</p>
@@ -790,7 +791,7 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
           <div class="cd-bar" aria-hidden="true"><i></i></div>
           <p class="cd-end">עד יום חמישי, 12.11, בשעה 22:00</p>
         </div>
-      <p class="note" id="launchNote" style="color:var(--muted)">מחיר ההשקה תקף עד יום חמישי, 12.11, בשעה 22:00. אחר כך המחיר עולה ל-1,200 ₪.</p>
+      <p class="note" id="launchNote" style="color:var(--muted)" data-promo>מחיר ההשקה תקף עד יום חמישי, 12.11, בשעה 22:00. אחר כך המחיר עולה ל-1,200 ₪.</p>
       <div class="incl">
         <p>תוכנה אוטומטית לעיצוב אלבומים</p>
         <p>מאות פריסות, בקלאסי ובלייף סטייל</p>
@@ -802,8 +803,8 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
         <p>גישה מיידית לאזור הרוכשות</p>
       </div>
       <a class="cta lg" href="https://pay.grow.link/Njc4NDc~a0f8480e5bcdb06b411c3984e11fc23f-NDI1Nzg3Ng" data-buy>אני רוצה את TEZA ALBUM במחיר ההשקה <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      <div class="trust"><span>תשלום מאובטח</span><span>קבלה נשלחת אלייך למייל</span><span>פרטי כניסה מיד אחרי התשלום</span></div>
-      <p class="legal-note">ברכישה את מאשרת את <a href="https://shiru178.github.io/album/terms/" target="_blank" rel="noopener">תנאי הרכישה והשימוש</a>.</p>
+      <div class="trust" data-promo><span>תשלום מאובטח</span><span>קבלה נשלחת אלייך למייל</span><span>פרטי כניסה מיד אחרי התשלום</span></div>
+      <p class="legal-note" data-promo>ברכישה את מאשרת את <a href="https://shiru178.github.io/album/terms/" target="_blank" rel="noopener">תנאי הרכישה והשימוש</a>.</p>
     </div></div>
   </div>
 </section>
@@ -832,8 +833,8 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
       <p class="a">לא. הרכישה חד־פעמית.</p>
       <p class="q">ואם אין לי אינטרנט?</p>
       <p class="a">אין צורך בחיבור לאינטרנט בזמן העבודה בתוכנה.</p>
-      <p class="q">עד מתי מחיר ההשקה?</p>
-      <p class="a">עד יום חמישי, 12.11, בשעה 22:00. אחר כך המחיר עולה ל-1,200 ₪.</p>
+      <p class="q" data-promo>עד מתי מחיר ההשקה?</p>
+      <p class="a" data-promo>עד יום חמישי, 12.11, בשעה 22:00. אחר כך המחיר עולה ל-1,200 ₪.</p>
     </div>
   </div>
 </section>
@@ -866,9 +867,9 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
   <div class="wrap">
     <div class="triad"><span>את מצלמת.</span><span>היא מעצבת.</span><span class="gtext">את מחליטה.</span></div>
     <div class="recap"><span>16 סרטוני הדרכה</span><span>עיצוב אוטומטי</span><span>מאות פריסות</span><span>כיתובים ואלמנטים</span><span>התאמה אישית</span><span>בלי מנוי</span><span>בלי אינטרנט בזמן העבודה</span></div>
-    <div class="price-row"><span class="now num">479 ₪</span><span class="was num">1,200 ₪</span><span class="tag">חיסכון של 721 ₪</span></div>
+    <div class="price-row"><span class="now num" data-promo>479 ₪</span><span class="now num" data-full hidden>1,200 ₪</span><span class="was num" data-promo>1,200 ₪</span><span class="tag" data-promo>חיסכון של 721 ₪</span></div>
     <a class="cta lg" href="https://pay.grow.link/Njc4NDc~a0f8480e5bcdb06b411c3984e11fc23f-NDI1Nzg3Ng" data-buy>כן, אני רוצה את TEZA ALBUM ב-479 ₪ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <p class="legal-note">ברכישה את מאשרת את <a href="https://shiru178.github.io/album/terms/" target="_blank" rel="noopener">תנאי הרכישה והשימוש</a>.</p>
+    <p class="legal-note" data-promo>ברכישה את מאשרת את <a href="https://shiru178.github.io/album/terms/" target="_blank" rel="noopener">תנאי הרכישה והשימוש</a>.</p>
     <p class="worth">כי הזמן שלך שווה הרבה יותר מעוד שעה על עיצוב אלבום.</p>
     <p class="slogan">את התמונות <b>את מצלמת.</b><br>את האלבום <b class="gtext">התוכנה מעצבת.</b></p>
     <div class="love"><span>באהבה,</span><strong>שירה צפדיה</strong><span>TEZA Academy</span></div>
@@ -894,7 +895,7 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
   <div class="row2"><a href="https://shiru178.github.io/album/accessibility/" target="_blank" rel="noopener">הצהרת נגישות</a><button type="button" class="reset" id="a11yReset">איפוס</button></div>
 </div>
 
-<div class="buybar" id="buybar" aria-hidden="true">
+<div class="buybar" id="buybar" aria-hidden="true" data-promo>
   <div class="p"><b class="num">479 ₪</b><span data-bar-sub>במקום 1,200 ₪ · מחיר השקה</span></div>
   <a class="cta" href="https://pay.grow.link/Njc4NDc~a0f8480e5bcdb06b411c3984e11fc23f-NDI1Nzg3Ng" data-buy tabindex="-1">לרכישה</a>
 </div>
@@ -908,6 +909,8 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
   // End of the launch price (Israel time, set in build.cjs). Empty: no countdown.
   const LAUNCH_END = '2026-11-12T22:00:00+02:00';
   const LAUNCH_HOURS = 72; // length of the launch window, only for the draining line
+  // 'on': at LAUNCH_END the page turns into the 1,200 page and the buttons stop. Anything else: only the clocks hide, buying goes on.
+  const LAUNCH_SWITCH = 'off' === 'on';
   // Her portrait for the "HELLO." section, e.g. 'assets/shira.webp'. Empty: the section runs without a photo.
   const ME_PHOTO = '';
 
@@ -1064,7 +1067,8 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
   openAlbum(0);
 
   // ===== the math =====
-  const sA = $('#sAlbums'), sM = $('#sMins'), sR = $('#sRate'), PRICE = 479, WITH = 5;
+  const sA = $('#sAlbums'), sM = $('#sMins'), sR = $('#sRate'), WITH = 5;
+  let PRICE = 479;
   const hm = (min) => { const h = Math.floor(min / 60), m = Math.round(min % 60); if (!h) return `${m} דקות`; if (!m) return h === 1 ? 'שעה' : `${h} שעות`; return `${h === 1 ? 'שעה' : h + ' שעות'} ו-${m} דקות`; };
   const calc = () => {
     const a = +sA.value, m = +sM.value, r = +sR.value;
@@ -1096,7 +1100,7 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
   };
   const tick = () => {
     const left = end - Date.now();
-    if (left <= 0) { endLaunch(); return; }
+    if (left <= 0) { if (LAUNCH_SWITCH) endLaunch(); else clocks.forEach(c => { c.hidden = true; }); return; }
     const t = Math.floor(left / 1000), d = Math.floor(t / 86400), v = { d, h: Math.floor(t % 86400 / 3600), m: Math.floor(t % 3600 / 60), s: t % 60 };
     const frac = Math.min(1, left / (LAUNCH_HOURS * 3600e3));
     clocks.forEach(c => {
@@ -1107,15 +1111,16 @@ html.a11y-contrast .page .hero>.giant{color:transparent}
     setTimeout(tick, 1000 - (Date.now() % 1000) + 15);
   };
   if (!isNaN(end)) {
-    if (Date.now() >= end) endLaunch();
+    if (Date.now() >= end) { if (LAUNCH_SWITCH) endLaunch(); }
     else { clocks.forEach(c => { c.hidden = false; }); tick(); }
   }
   function endLaunch() {
-    // the Grow link sells at 479, so after the launch the buttons stop
-    document.querySelectorAll('[data-buy]').forEach(a => { a.setAttribute('aria-disabled', 'true'); a.removeAttribute('href'); });
+    // after the launch: a plain 1,200 page. The Grow link sells at 479, so the buttons stop until there is a new payment page.
     clocks.forEach(c => { c.hidden = true; });
-    $('#launchNote').textContent = 'מחיר ההשקה הסתיים. לפרטים על רכישה במחיר המלא: teza.zilum@gmail.com';
-    document.querySelectorAll('[data-launch-label]').forEach(e => { e.textContent = 'מחיר ההשקה הסתיים'; });
+    document.querySelectorAll('[data-promo]').forEach(e => { e.hidden = true; });
+    document.querySelectorAll('[data-full]').forEach(e => { e.hidden = false; });
+    document.querySelectorAll('.cta[data-buy]').forEach(a => { a.setAttribute('aria-disabled', 'true'); a.removeAttribute('href'); a.textContent = 'הרכישה תיפתח בקרוב'; });
+    PRICE = 1200; calc();
   }
 
   // ===== about photo =====
